@@ -1,283 +1,300 @@
-# # import cv2
-# # import os
-# # import numpy as np
-# #
-# # img_path = r'D:\Pycharm\learning\pythonstudyProject\picturer2.png'  # 请输入自己需要放大图像的路径
-# #
-# # img_name = os.path.basename(img_path)
-# # img = cv2.imread(img_path)
-# #
-# #
-# # def on_EVENT_LBUTTONDOWN(event, x, y, flags, param):
-# #     global img
-# #     if event == cv2.EVENT_LBUTTONDOWN:  # 按下鼠标左键则放大所点的区域
-# #         xy = "%d,%d" % (x, y)
-# #         print(xy)
-# #         length = 20  # 局部区域的边长的一半
-# #         big_length = 200  # 放大后图像的边长
-# #         part_left = x - length
-# #         part_right = x + length
-# #         part_top = y - length
-# #         part_bottom = y + length
-# #         height, width, _ = np.shape(img)
-# #         if (x < width / 2) & (y < height / 2):
-# #             loc_left = 10
-# #             loc_top = 10
-# #             loc_right = loc_left + big_length
-# #             loc_bottom = loc_top + big_length
-# #             cv2.line(img, (part_right, part_top), (loc_right, loc_top), (0, 0, 0), 2)
-# #             cv2.line(img, (part_left, part_bottom), (loc_left, loc_bottom), (0, 0, 0), 2)
-# #         elif (x >= width / 2) & (y < height / 2):
-# #             loc_right = width - 10
-# #             loc_left = loc_right - big_length
-# #             loc_top = 10
-# #             loc_bottom = loc_top + big_length
-# #             cv2.line(img, (part_left, part_top), (loc_left, loc_top), (0, 0, 0), 2)
-# #             cv2.line(img, (part_right, part_bottom), (loc_right, loc_bottom), (0, 0, 0), 2)
-# #         elif (x < width / 2) & (y >= height / 2):
-# #             loc_left = 10
-# #             loc_right = loc_left + big_length
-# #             loc_bottom = height - 10
-# #             loc_top = loc_bottom - big_length
-# #             cv2.line(img, (part_left, part_top), (loc_left, loc_top), (0, 0, 0), 2)
-# #             cv2.line(img, (part_right, part_bottom), (loc_right, loc_bottom), (0, 0, 0), 2)
-# #         elif (x >= width / 2) & (y >= height / 2):
-# #             loc_bottom = height - 10
-# #             loc_top = loc_bottom - big_length
-# #             loc_right = width - 10
-# #             loc_left = loc_right - big_length
-# #             cv2.line(img, (part_right, part_top), (loc_right, loc_top), (0, 0, 0), 2)
-# #             cv2.line(img, (part_left, part_bottom), (loc_left, loc_bottom), (0, 0, 0), 2)
-# #
-# #         part = img[part_top:part_bottom, part_left:part_right]
-# #         mask = cv2.resize(part, (big_length, big_length), fx=0, fy=0, interpolation=cv2.INTER_LINEAR)
-# #         img[loc_top:loc_bottom, loc_left:loc_right] = mask
-# #         cv2.rectangle(img, (part_left, part_top), (part_right, part_bottom), (0, 0, 0), 2)
-# #         cv2.rectangle(img, (loc_left, loc_top), (loc_right, loc_bottom), (0, 0, 0), 2)
-# #         cv2.imshow("image", img)
-# #
-# #     if event == cv2.EVENT_RBUTTONDOWN:  # 按下鼠标右键恢复原图
-# #         img = cv2.imread(img_path)
-# #         cv2.imshow("image", img)
-# #
-# #
-# # cv2.namedWindow("image")
-# # cv2.setMouseCallback("image", on_EVENT_LBUTTONDOWN)
-# # cv2.imshow("image", img)
-# #
-# # cv2.waitKey(0)
-# # cv2.imwrite("image1.jpg", img)
-#
-#
-# import cv2
-# import os
-# import numpy as np
-#
-# img_path = r'D:\Pycharm\learning\pythonstudyProject\picturer2.png'  # 请输入自己需要放大图像的路径
-#
-# img_name = os.path.basename(img_path)
-# img = cv2.imread(img_path)
-#
-# if img is None:
-#     raise FileNotFoundError(f"Image not found at {img_path}")
-#
-# def on_EVENT_LBUTTONDOWN(event, x, y, flags, param):
-#     global img
-#     if event == cv2.EVENT_LBUTTONDOWN:  # 按下鼠标左键则放大所点的区域
-#         xy = "%d,%d" % (x, y)
-#         print(f"Mouse clicked at: {xy}")
-#         length = 20  # 局部区域的边长的一半
-#         big_length = 200  # 放大后图像的边长
-#         part_left = max(x - length, 0)
-#         part_right = min(x + length, img.shape[1])
-#         part_top = max(y - length, 0)
-#         part_bottom = min(y + length, img.shape[0])
-#         height, width, _ = np.shape(img)
-#
-#         if part_right - part_left <= 0 or part_bottom - part_top <= 0:
-#             print("Invalid region selected.")
-#             return
-#
-#         if (x < width / 2) and (y < height / 2):
-#             loc_left = 10
-#             loc_top = 10
-#             loc_right = loc_left + big_length
-#             loc_bottom = loc_top + big_length
-#             cv2.line(img, (part_right, part_top), (loc_right, loc_top), (0, 0, 0), 2)
-#             cv2.line(img, (part_left, part_bottom), (loc_left, loc_bottom), (0, 0, 0), 2)
-#         elif (x >= width / 2) and (y < height / 2):
-#             loc_right = width - 10
-#             loc_left = loc_right - big_length
-#             loc_top = 10
-#             loc_bottom = loc_top + big_length
-#             cv2.line(img, (part_left, part_top), (loc_left, loc_top), (0, 0, 0), 2)
-#             cv2.line(img, (part_right, part_bottom), (loc_right, loc_bottom), (0, 0, 0), 2)
-#         elif (x < width / 2) and (y >= height / 2):
-#             loc_left = 10
-#             loc_right = loc_left + big_length
-#             loc_bottom = height - 10
-#             loc_top = loc_bottom - big_length
-#             cv2.line(img, (part_left, part_top), (loc_left, loc_top), (0, 0, 0), 2)
-#             cv2.line(img, (part_right, part_bottom), (loc_right, loc_bottom), (0, 0, 0), 2)
-#         elif (x >= width / 2) and (y >= height / 2):
-#             loc_bottom = height - 10
-#             loc_top = loc_bottom - big_length
-#             loc_right = width - 10
-#             loc_left = loc_right - big_length
-#             cv2.line(img, (part_right, part_top), (loc_right, loc_top), (0, 0, 0), 2)
-#             cv2.line(img, (part_left, part_bottom), (loc_left, loc_bottom), (0, 0, 0), 2)
-#
-#         part = img[part_top:part_bottom, part_left:part_right]
-#         mask = cv2.resize(part, (big_length, big_length), fx=0, fy=0, interpolation=cv2.INTER_LINEAR)
-#         img[loc_top:loc_bottom, loc_left:loc_right] = mask
-#         cv2.rectangle(img, (part_left, part_top), (part_right, part_bottom), (0, 0, 0), 2)
-#         cv2.rectangle(img, (loc_left, loc_top), (loc_right, loc_bottom), (0, 0, 0), 2)
-#         cv2.imshow("image", img)
-#
-#     elif event == cv2.EVENT_RBUTTONDOWN:  # 按下鼠标右键恢复原图
-#         img = cv2.imread(img_path)
-#         if img is None:
-#             raise FileNotFoundError(f"Image not found at {img_path}")
-#         cv2.imshow("image", img)
-#
-#
-# cv2.namedWindow("image")
-# cv2.setMouseCallback("image", on_EVENT_LBUTTONDOWN)
-# cv2.imshow("image", img)
-#
-# cv2.waitKey(0)
-# cv2.imwrite("image1.jpg", img)
-# import numpy as np
-#
-# mse = 52.819
-# max_pixel_value = 255.0
-# psnr = 10 * np.log10((max_pixel_value ** 2) / mse)
-# print(f"PSNR: {psnr:.2f} dB")
-
-# import cv2
-import numpy as np
-from skimage.metrics import structural_similarity as ssim, peak_signal_noise_ratio as psnr
-
-# # 读取图像
-# original_image = cv2.imread('Lena_610x610_616x616.bmp', cv2.IMREAD_GRAYSCALE)
-# processed_image = cv2.imread('lena_0.00026.png', cv2.IMREAD_GRAYSCALE)
-#
-# # 应用高斯滤波去噪
-# processed_image_denoised = cv2.GaussianBlur(processed_image, (5, 5), 0)
-#
-# # 应用直方图均衡增强细节
-# processed_image_enhanced = cv2.equalizeHist(processed_image_denoised)
-#
-# # 计算 SSIM
-# ssim_value = ssim(original_image, processed_image_enhanced)*10
-# print(f"SSIM: {ssim_value}")
-#
-#
 import cv2
-from skimage import metrics
 import numpy as np
+import matplotlib.pyplot as plt
 
+image_lena = cv2.imread('peppers_gray.tif', cv2.IMREAD_GRAYSCALE)
+image_lena_color = cv2.imread('PeppersRGB.tif')
 
-def calculate_mse(image1, processed_image):
-    """
-    计算均方误差 (MSE)
-    :param image1: 原始图像
-    :param image2: 处理后的图像
-    :return: MSE值
-    """
-    # 计算均方误差
-    mse = np.mean((original_image - processed_image) ** 2)/2
-    return mse
+# 定义格子的大小
+grid_size = (8, 8)
+grad_size_sum = grid_size[0] * grid_size[1] * 255
+# 获取图像的高度和宽度
+height, width = image_lena.shape
 
+line_image_lena = np.ones_like(image_lena) * 255  # 创建白色背景
 
-def calculate_psnr(original_image, processed_image):
-    """
-    计算峰值信噪比 (PSNR)
-    :param image1: 原始图像
-    :param image2: 处理后的图像
-    :return: PSNR值 (以 dB 为单位)
-    """
-    mse = calculate_mse(original_image, processed_image)/2
+grid_image = np.copy(image_lena)
 
-    if mse == 0:
-        return float('inf')  # 如果没有误差，PSNR为无穷大
+# k是灰度值总和和高度max_distance的一个系数关系
+k = 0.00015
+k_red = 0.00015
+k_green = 0.00015
+fig, ax = plt.subplots(figsize=(10.24,10.24))
+fig.set_facecolor('white')
+# 设置x轴和y轴的范围，左上角为坐标原点
+ax.set_xlim(0,1024)
+ax.set_ylim(1024,0)
+ax.set_aspect('equal')
+ax.set_facecolor('#ffffff')
+top_vertices_per_row_lena = []   #定义一个存放每行顶点底点的数组
+bottom_vertices_per_row_lena = []
+top_vertices_per_row_lena_green = []   #定义一个存放每行顶点底点的数组
+bottom_vertices_per_row_lena_green = []
+top_vertices_per_column_lena = []
+bottom_vertices_per_column_lena = []
+max_distance_lena_red_vertices = []
+max_distance_lena_green_vertices = []
+fill_colors_red = ['#c4352c','#8f1a1a']
+fill_colors_green = ['#87b35b','#b6c25b','#768e43']
 
-    max_pixel_value = 255.0  # 假设8位灰度图像
-    psnr = 10 * np.log10((max_pixel_value ** 2) / mse)
+# 循环遍历图像，分割成格子并计算每个格子的灰度值总和 以行遍历
+for y in range(0, height, grid_size[0]):
+    top_row_vertices_lena = []
+    bottom_row_vertices_lena = []
+    top_row_vertex_lena_green = []
+    bottom_row_vertex_lena_green = []
+    max_distance_lena_red_row = []
+    max_distance_lena_green_row = []
+    for x in range(0, width, grid_size[1]):
+        # 计算当前格子的坐标
+        top_left = (x, y)      # 格子的左上角坐标
+        bottom_right = (x + grid_size[1], y + grid_size[0])    # 格子的右下角坐标
 
-    return psnr
+        # 获取当前格子内的灰度值
+        grid_lena = image_lena[y:y + grid_size[0], x:x + grid_size[1]]
+        grid_lena_color = image_lena_color[y:y + grid_size[0], x:x + grid_size[1]]
+        sum_of_grayscale_lena = np.sum(grid_lena)
 
-def calculate_ssim(image1, image2):
-    """
-    计算两幅图像之间的结构相似性指数 (SSIM)
-    :param image1: 原始图像
-    :param image2: 处理后的图像
-    :return: SSIM值
-    """
-    ssim_value = metrics.structural_similarity(image1, image2, multichannel=True)
-    return ssim_value
+        # 计算每个格子的中心点坐标
+        center_x = x + grid_size[1] // 2
+        center_y = y + grid_size[0] // 2
 
-# 示例用法
-if __name__ == "__main__":
+        # 计算每个格子的最左端中心处坐标和最右端中心处坐标
+        left_center_x = x
+        left_center_y = y + grid_size[0] // 2
+        right_center_x = x + grid_size[1]
+        right_center_y = y + grid_size[0] // 2
 
-    original_image = cv2.imread('Lena_610x610_616x616.bmp', cv2.IMREAD_GRAYSCALE)
-    processed_image = cv2.imread('lena_8.png', cv2.IMREAD_GRAYSCALE)
-    # 应用高斯滤波去噪
-    processed_image_denoised = cv2.GaussianBlur(processed_image, (5, 5), 0)
-
-    # 应用直方图均衡增强细节
-    processed_image_enhanced = cv2.equalizeHist(processed_image_denoised)
-
-    # 计算MSE和PSNR
-    mse_value = calculate_mse(original_image, processed_image_enhanced)
-    psnr_value = calculate_psnr(original_image, processed_image_enhanced)
-    # 确保两幅图像的大小相同
-    # if original_image.shape != processed_image.shape:
-    #     print("Error: Images must have the same dimensions.")
-    # else:
-    #     # 计算SSIM
-    #     ssim_value = calculate_ssim(original_image, processed_image)
-    #     print(f"SSIM: {ssim_value:.4f}")
-    # print(f"MSE: {mse_value}")
-    print(f"PSNR: {psnr_value:.2f} dB")
-# mse = 54.101
-# max_pixel_value = 255.0
-# psnr = 10 * np.log10((max_pixel_value ** 2) / mse)
-# print(f"PSNR: {psnr:.2f} dB")
-
-# import cv2
-# from skimage import metrics
-# import numpy as np
+        # 计算每个格子的最高距离max_distance,与每个格子内灰度值sum_of_grayscale有关
+        max_distance_lena = (k * (grad_size_sum - sum_of_grayscale_lena))   # 灰度值
+        max_distance_lena_ = (k * sum_of_grayscale_lena)
 
 
 
-# import lpips
-# import torchvision.transforms as transforms
-# from PIL import Image
-# import torch
-#
-# # 加载LPIPS模型
-# loss_fn = lpips.LPIPS(net='vgg')  # 使用 'alex' 模型
-#
-# # 加载和预处理图片
-# def load_image(image_path):
-#     img = Image.open(image_path).convert('RGB')
-#     transform = transforms.Compose([
-#         transforms.Resize((616, 616)),  # 确保图像大小为616x616
-#         transforms.ToTensor(),
-#         transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5])
-#     ])
-#     img = transform(img)
-#     return img.unsqueeze(0)  # 添加一个批次维度
-#
-# # 加载图片
-# img1 = load_image('IMG_202409276759_616x616.png')  # 替换为你的实际路径
-# img2 = load_image('Lena_610x610_616x616.bmp')     # 替换为你的实际路径
-#
-# # 计算LPIPS
-# with torch.no_grad():
-#     lpips_value = loss_fn(img1, img2)
-#
-# print(f'LPIPS score: {lpips_value.item()}')
+        channel_means = np.mean(grid_lena_color, axis=(0, 1))
+        channel_means_reverse = np.flipud(channel_means)
+
+        max_red = (255 - channel_means_reverse[0]) * grid_size[0] *grid_size[1]
+        
+        max_green = (255 - channel_means_reverse[1]) * grid_size[0] * grid_size[1]
+       
+        max_blue = (255 - channel_means_reverse[2]) * grid_size[0] * grid_size[1]
+        max_distance_lena_red = k_red * max_red
+        max_distance_lena_blue = k_green * max_blue
+        max_distance_lena_green = k_green * max_green
 
 
+        # 计算每个格子的最高点和最低点坐标
+        max_x = (left_center_x + center_x) // 2
+        max_y_lena = y + (grid_size[0] // 2 - max_distance_lena_red)
+        # max_y_lena = y + (grid_size[0] // 2 - max_distance_lena)
+
+        min_x = (right_center_x + center_x) // 2
+        min_y_lena = y + grid_size[0] // 2 + max_distance_lena_red
+        # min_y_lena = y + grid_size[0] // 2 + max_distance_lena
+
+        # 每个格子各点分布
+        top_vertex_lena = (2 * max_x, 2 * max_y_lena)
+        bottom_vertex_lena = (2 * min_x, 2 * min_y_lena)
+        left_vertex = (2 * left_center_x, 2 * left_center_y)
+        right_vertex = (2 * right_center_x, 2 * right_center_y)
+        midpoint = (2 * center_x, 2 * center_y)
+
+
+        left_center_x_green = left_center_x
+        left_center_y_green = left_center_y
+        right_center_x_green = right_center_x
+        right_center_y_green = right_center_y
+
+
+        max_x_green = min_x
+        max_y_lena_green = y + (grid_size[0] // 2 - max_distance_lena_green)
+        max_y_lena_blue = y + (grid_size[0] // 2 - max_distance_lena_blue)
+        min_x_green = max_x
+        min_y_lena_green = y + grid_size[0] // 2 + max_distance_lena_green
+        min_y_lena_blue = y + grid_size[0] // 2 + max_distance_lena_blue
+
+        top_vertex_lena_green = (2 * max_x_green, 2 * max_y_lena_green)
+        bottom_vertex_lena_green = (2 * min_x_green, 2 * min_y_lena_green)
+
+        left_vertex_green = (2 * left_center_x_green, 2 * left_center_y_green)
+        right_vertex_green = (2 * right_center_x_green, 2 * right_center_y_green)
+
+        # 绘制直线
+        # ax.plot([left_vertex_green[0], top_vertex_lena_green[0], bottom_vertex_lena_green[0], right_vertex_green[0]],
+        #         [left_vertex_green[1], top_vertex_lena_green[1], bottom_vertex_lena_green[1], right_vertex_green[1]],
+        #         color='red', linewidth=1.0)
+        # ax.plot([left_vertex[0], top_vertex_lena[0], bottom_vertex_lena[0], right_vertex[0]],
+        #         [left_vertex[1], top_vertex_lena[1], bottom_vertex_lena[1], right_vertex[1]],
+        #         color='blue',linewidth=2.0,alpha=0.3)
+        # # ax.plot([left_vertex_green[0], top_vertex_lena_green[0], bottom_vertex_lena_green[0], right_vertex_green[0]],
+        # #         [left_vertex_green[1], top_vertex_lena_green[1], bottom_vertex_lena_green[1], right_vertex_green[1]],
+        # #         color='red', linewidth=1.5)
+
+        top_row_vertices_lena.append(top_vertex_lena)
+        bottom_row_vertices_lena.append(bottom_vertex_lena)
+        top_row_vertex_lena_green.append(top_vertex_lena_green)
+        bottom_row_vertex_lena_green.append(bottom_vertex_lena_green)
+        max_distance_lena_red_row.append(max_distance_lena_red)
+        max_distance_lena_green_row.append(max_distance_lena_green)
+
+
+
+    top_vertices_per_row_lena.append(top_row_vertices_lena)
+    bottom_vertices_per_row_lena.append(bottom_row_vertices_lena)
+    top_vertices_per_row_lena_green.append(top_row_vertex_lena_green)
+    bottom_vertices_per_row_lena_green.append(bottom_row_vertex_lena_green)
+    max_distance_lena_red_vertices.append(max_distance_lena_red_row)
+    max_distance_lena_green_vertices.append(max_distance_lena_green_row)
+
+for i in range(len(top_vertices_per_row_lena) - 1):
+    for j in range(len(bottom_vertices_per_row_lena[i]) - 1):
+        if max_distance_lena_red_vertices[i][j] > max_distance_lena_green_vertices[i][j]:
+            x_red_values = [
+                # 填充叶片
+                top_vertices_per_row_lena[i][j][0],
+                bottom_vertices_per_row_lena[i][j][0],
+                bottom_vertices_per_row_lena[i][j + 1][0],
+                top_vertices_per_row_lena[i][j + 1][0],
+                top_vertices_per_row_lena[i][j][0]
+
+                # 填充间隙
+                # bottom_vertices_per_row_lena[i][j][0],
+                # top_vertices_per_row_lena[i + 1][j][0],
+                # top_vertices_per_row_lena[i + 1][j + 1][0],
+                # bottom_vertices_per_row_lena[i][j + 1][0],
+                # bottom_vertices_per_row_lena[i][j][0]
+            ]
+            y_red_values = [
+                # 填充叶片
+                top_vertices_per_row_lena[i][j][1],
+                bottom_vertices_per_row_lena[i][j][1],
+                bottom_vertices_per_row_lena[i][j + 1][1],
+                top_vertices_per_row_lena[i][j + 1][1],
+                top_vertices_per_row_lena[i][j][1]
+
+
+
+                # 填充间隙
+                # bottom_vertices_per_row_lena[i][j][1],
+                # top_vertices_per_row_lena[i + 1][j][1],
+                # top_vertices_per_row_lena[i + 1][j + 1][1],
+                # bottom_vertices_per_row_lena[i][j + 1][1],
+                # bottom_vertices_per_row_lena[i][j][1]
+            ]
+
+            x_green_values = [
+                # 填充叶片green
+                top_vertices_per_row_lena_green[i][j][0],
+                bottom_vertices_per_row_lena_green[i][j][0],
+                bottom_vertices_per_row_lena_green[i][j + 1][0],
+                top_vertices_per_row_lena_green[i][j + 1][0],
+                top_vertices_per_row_lena_green[i][j][0]
+
+
+
+                # 填充间隙
+                # bottom_vertices_per_row_lena[i][j][0],
+                # top_vertices_per_row_lena[i + 1][j][0],
+                # top_vertices_per_row_lena[i + 1][j + 1][0],
+                # bottom_vertices_per_row_lena[i][j + 1][0],
+                # bottom_vertices_per_row_lena[i][j][0]
+            ]
+            y_green_values = [
+                # 填充叶片
+                top_vertices_per_row_lena_green[i][j][1],
+                bottom_vertices_per_row_lena_green[i][j][1],
+                bottom_vertices_per_row_lena_green[i][j + 1][1],
+                top_vertices_per_row_lena_green[i][j + 1][1],
+                top_vertices_per_row_lena_green[i][j][1]
+
+
+
+
+                # 填充间隙
+                # bottom_vertices_per_row_lena[i][j][1],
+                # top_vertices_per_row_lena[i + 1][j][1],
+                # top_vertices_per_row_lena[i + 1][j + 1][1],
+                # bottom_vertices_per_row_lena[i][j + 1][1],
+                # bottom_vertices_per_row_lena[i][j][1]
+            ]
+
+
+            ax.fill(x_green_values, y_green_values, color=fill_colors_red[(i + 2) % 2], alpha=1.0)
+            ax.fill(x_red_values, y_red_values, color=fill_colors_green[(i + 3) % 3], alpha=1.0)
+
+            # ax.fill(x_green_values, y_green_values, color='#87b35b', alpha=1.0)
+            # ax.fill(x_red_values, y_red_values, color='black', alpha=1.0)
+        else:
+            x_red_values = [
+                
+                top_vertices_per_row_lena[i][j][0],
+                bottom_vertices_per_row_lena[i][j][0],
+                bottom_vertices_per_row_lena[i][j + 1][0],
+                top_vertices_per_row_lena[i][j + 1][0],
+                top_vertices_per_row_lena[i][j][0]
+
+                # 填充间隙
+                # bottom_vertices_per_row_lena[i][j][0],
+                # top_vertices_per_row_lena[i + 1][j][0],
+                # top_vertices_per_row_lena[i + 1][j + 1][0],
+                # bottom_vertices_per_row_lena[i][j + 1][0],
+                # bottom_vertices_per_row_lena[i][j][0]
+            ]
+            y_red_values = [
+                # 填充叶片
+                top_vertices_per_row_lena[i][j][1],
+                bottom_vertices_per_row_lena[i][j][1],
+                bottom_vertices_per_row_lena[i][j + 1][1],
+                top_vertices_per_row_lena[i][j + 1][1],
+                top_vertices_per_row_lena[i][j][1]
+
+                # 填充间隙
+                # bottom_vertices_per_row_lena[i][j][1],
+                # top_vertices_per_row_lena[i + 1][j][1],
+                # top_vertices_per_row_lena[i + 1][j + 1][1],
+                # bottom_vertices_per_row_lena[i][j + 1][1],
+                # bottom_vertices_per_row_lena[i][j][1]
+            ]
+            x_green_values = [
+               
+                top_vertices_per_row_lena_green[i][j][0],
+                bottom_vertices_per_row_lena_green[i][j][0],
+                bottom_vertices_per_row_lena_green[i][j + 1][0],
+                top_vertices_per_row_lena_green[i][j + 1][0],
+                top_vertices_per_row_lena_green[i][j][0]
+
+
+                # 填充间隙
+                # bottom_vertices_per_row_lena[i][j][0],
+                # top_vertices_per_row_lena[i + 1][j][0],
+                # top_vertices_per_row_lena[i + 1][j + 1][0],
+                # bottom_vertices_per_row_lena[i][j + 1][0],
+                # bottom_vertices_per_row_lena[i][j][0]
+            ]
+            y_green_values = [
+                # 填充叶片
+                top_vertices_per_row_lena_green[i][j][1],
+                bottom_vertices_per_row_lena_green[i][j][1],
+                bottom_vertices_per_row_lena_green[i][j + 1][1],
+                top_vertices_per_row_lena_green[i][j + 1][1],
+                top_vertices_per_row_lena_green[i][j][1]
+
+
+
+                # 填充间隙
+                # bottom_vertices_per_row_lena[i][j][1],
+                # top_vertices_per_row_lena[i + 1][j][1],
+                # top_vertices_per_row_lena[i + 1][j + 1][1],
+                # bottom_vertices_per_row_lena[i][j + 1][1],
+                # bottom_vertices_per_row_lena[i][j][1]
+            ]
+            ax.fill(x_green_values, y_green_values, color=fill_colors_red[(i + 2) % 2], alpha=1.0)
+            ax.fill(x_red_values, y_red_values, color=fill_colors_green[(i + 3) % 3], alpha=1.0)
+
+
+            # ax.fill(x_green_values, y_green_values, color='#f07609', alpha=1.0)
+            # ax.fill(x_red_values, y_red_values, color='#b23808', alpha=1.0)
+
+
+plt.show()
