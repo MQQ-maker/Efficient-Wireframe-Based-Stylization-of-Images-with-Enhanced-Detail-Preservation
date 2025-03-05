@@ -1,11 +1,8 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
-import time  # 导入time模块
 
-# 记录开始时间
-start_time = time.time()
-image_lena = cv2.imread('ying_gray.jpg', cv2.IMREAD_GRAYSCALE)
+image_lena = cv2.imread('peppers_gray.tif', cv2.IMREAD_GRAYSCALE)
 image_lena_color = cv2.imread('PeppersRGB.tif')
 
 # 定义格子的大小
@@ -20,8 +17,7 @@ grid_image = np.copy(image_lena)
 
 # k是灰度值总和和高度max_distance的一个系数关系
 k = 0.00015
-k_red = 0.00015
-k_green = 0.00015
+
 fig, ax = plt.subplots(figsize=(10.24,10.24))
 fig.set_facecolor('white')
 # 设置x轴和y轴的范围，左上角为坐标原点
