@@ -34,8 +34,8 @@ top_vertices_per_column_lena = []
 bottom_vertices_per_column_lena = []
 max_distance_lena_red_vertices = []
 max_distance_lena_green_vertices = []
-fill_colors_red = ['#c4352c','#8f1a1a']
-fill_colors_green = ['#87b35b','#b6c25b','#768e43']
+fill_colors_red = []
+fill_colors_green = []
 
 # 循环遍历图像，分割成格子并计算每个格子的灰度值总和 以行遍历
 for y in range(0, height, grid_size[0]):
